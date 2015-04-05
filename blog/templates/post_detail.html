@@ -1,0 +1,12 @@
+{% import "macros.html" as macros %}
+{% extends "base.html" %}
+{% block content %}
+
+
+{{ macros.render_post(post) }}
+
+<a href="{{referrer}}">Back to overview</a>
+
+
+
+{% endblock %}

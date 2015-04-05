@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>
+    Delete Post
+</h1>
+
+<form role="form" id="post_delete_form" method="POST">
+    <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" class="form-control" id="title" name="title" value="{{post.title}}" required>
+    </div>
+    <div class="form-group">
+        <label for="content">Content</label>
+        <textarea class="form-control" id="content" name="content" rows="20" required>{{post.content | safe}}</textarea>
+    </div>
+    <button class="btn btn-default" id="post_delete_button">Delete post</button>
+    <a href="{{referrer}}">Back to overview</a>
+</form>
+<script>
+$("#post_delete_button").on("click",function() {
+    var confirmation = window.confirm("Do you really want to delete this post?");
+    if (confirmation === true) {
+                                      
+    var form = window.document.forms[0];
+    form.submit();
+    }
+});
+</script>
+{% endblock %}
