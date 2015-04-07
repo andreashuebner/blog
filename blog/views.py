@@ -7,6 +7,7 @@ import mistune
 from flask import request, redirect, url_for
 from flask import flash
 from flask.ext.login import login_user
+from flask.ext.login import logout_user
 from flask.ext.login import login_required
 from werkzeug.security import check_password_hash
 from .models import User
@@ -42,9 +43,12 @@ def posts(page=1, paginate_by=10):
 @app.route("/post/<int:id>/edit",methods=["POST"])
 def post_edit(id):
     post = session.query(Post).get(id)
-    post.title=request.form["title"],
-    post.content=mistune.markdown(request.form["content"])
-    session.commit()
+    author_id = post.author_id
+    current_user_id = current_user.id
+    if current_user_id == author_id: #only allow delete if written by user. 
+        post.title=request.form["title"],
+        post.content=mistune.markdown(request.form["content"])
+        session.commit()
     return redirect(url_for("posts"))
     
 @app.route("/post/<int:id>/delete",methods=["GET"])
@@ -72,7 +76,13 @@ def post_detail(id):
     return render_template("post_detail.html",
                            post=post,
                            referrer=referrer
-                           )
+                            )
+
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for("posts"))
+    
 @app.route("/post/add", methods=["GET"])
 @login_required
 def add_post_get():
@@ -84,8 +94,11 @@ def add_post_get():
 @login_required
 def delete_post(id):
     post = session.query(Post).get(id)
-    session.delete(post)
-    session.commit()
+    author_id = post.author_id
+    current_user_id = current_user.id
+    if current_user_id == author_id: #only allow delete if written by user. 
+        session.delete(post)
+        session.commit()
     return redirect(url_for("posts"))
 @app.route("/post/add", methods=["POST"])
 @login_required

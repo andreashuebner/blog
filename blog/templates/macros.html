@@ -1,4 +1,5 @@
-{% macro render_post(post) %}
+{% macro render_post(post,current_user) %}
+  
 <div class="row">
     <div class="col-md-2 text-right metadata">
         <ul class="list-unstyled">
@@ -12,11 +13,16 @@
             <a href="{{ url_for('post_detail',id=post.id) }}">{{ post.title }}</a>
            
         </h1>
-        {{ post.author.name }}
+      
+        {% if post.author.name %}
+        Author: <strong>{{ post.author.name }}</strong><br>
+        {% endif %}
         {{ post.content | safe }}
         <br><br>
-         <a href="{{ url_for('get_edit',id=post.id) }}">Edit this post</a>
-         <a href="{{ url_for('get_delete',id=post.id) }}">Delete this post</a>
+        {% if post.author_id == current_user.id %}
+         <a href="{{ url_for('get_edit',id=post.id) }}"><button type="button" class="btn btn-default">Edit this post</button></a>
+         <a href="{{ url_for('get_delete',id=post.id) }}"><button type="button" class="btn btn-default">Delete this post</button></a>
+        {% endif %}
     </div>
 </div>
 {% endmacro %}

@@ -2,10 +2,17 @@
 {% extends "base.html" %}
 {% block content %}
 <span id="add_post">
-<a href="{{url_for('add_post_get')}}">Add a post</a>
+  
+{% if current_user.name is defined %}
+   
+<a href="{{url_for('add_post_get')}}"><button type="button" class="btn btn-default">Add post</button></a>
+<a href="{{url_for('logout')}}"><button type="button" class="btn btn-default">Logout</button></a>
+{% else %}
+<a href="{{url_for('login_get')}}"><button type="button" class="btn btn-default">Login</button></a>    
+{% endif %}
 </span>
 {% for post in posts %}
-{{ macros.render_post(post) }}
+{{ macros.render_post(post,current_user) }}
 {% endfor %}
 
 <ul class="pager">
