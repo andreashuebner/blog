@@ -4,6 +4,7 @@ import datetime
 import sys
 
 sys.path.append('..')
+sys.path.append('.')
 
 # Configure your app to use the testing configuration
 os.environ["CONFIG_PATH"] = "blog.config.TestingConfig"
