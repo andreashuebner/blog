@@ -10,7 +10,7 @@
     </div>
     <div class="col-md-10">
         <h1>
-            <a href="{{ url_for('post_detail',id=post.id) }}">{{ post.title }}</a>
+            <a href="{{ url_for('post_detail',id=post.id) }}"><span class="post_title">{{ post.title }}</span></a>
            
         </h1>
       
@@ -20,8 +20,8 @@
         {{ post.content | safe }}
         <br><br>
         {% if post.author_id == current_user.id %}
-         <a href="{{ url_for('get_edit',id=post.id) }}"><button type="button" class="btn btn-default">Edit this post</button></a>
-         <a href="{{ url_for('get_delete',id=post.id) }}"><button type="button" class="btn btn-default">Delete this post</button></a>
+         <a href="{{ url_for('get_edit',id=post.id) }}"><button type="button" name="editbutton" class="btn btn-default">Edit this post</button></a>
+         <a href="{{ url_for('get_delete',id=post.id) }}"><button type="button" name="deletebutton" class="btn btn-default">Delete this post</button></a>
         {% endif %}
     </div>
 </div>

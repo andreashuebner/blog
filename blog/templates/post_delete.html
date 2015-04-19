@@ -14,7 +14,7 @@
         <label for="content">Content</label>
         <textarea class="form-control" id="content" name="content" rows="20" required>{{post.content | safe}}</textarea>
     </div>
-    <button class="btn btn-default" id="post_delete_button">Delete post</button>
+    <button class="btn btn-default" name="deletebutton" id="post_delete_button">Delete post</button>
     <a href="{{referrer}}">Back to overview</a>
 </form>
 <script>
